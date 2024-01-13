@@ -3,25 +3,27 @@ import { useEffect, useState } from "react";
 
 import { Note as NoteModel } from "./models/note";
 import { Note } from "./components";
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
+
+import * as NotesApi from "./network/notes_api";
+import AddNoteDialog from "./components/AddNoteDialog";
 
 function App() {
   const [notes, setNotes] = useState<NoteModel[]>([]);
 
+  const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
+
   useEffect(() => {
     async function loadNotes() {
       try {
-        const response = await fetch("/api/notes", { method: "GET" });
+        // if (!response.ok) {
+        //   throw new Error(`Server responded with status: ${response.status}`);
+        // }
+        const notes = await NotesApi.fetchNotes();
 
-        if (!response.ok) {
-          throw new Error(`Server responded with status: ${response.status}`);
-        }
-
-        const notes = await response.json();
         setNotes(notes);
       } catch (error) {
         console.error("Error loading notes:", error);
-        alert("Error loading notes. Please check console for details.");
       }
     }
     loadNotes();
@@ -29,6 +31,7 @@ function App() {
 
   return (
     <Container>
+      <Button onClick={() => setShowAddNoteDialog(true)}>Add new note</Button>
       <Row xs={1} md={2} lg={3} className="g-4">
         {notes.map((note) => {
           return (
@@ -38,6 +41,10 @@ function App() {
           );
         })}
       </Row>
+
+      {showAddNoteDialog && (
+        <AddNoteDialog onDismiss={() => setShowAddNoteDialog(false)} />
+      )}
     </Container>
   );
 }
