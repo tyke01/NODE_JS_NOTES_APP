@@ -1,3 +1,4 @@
+
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 /* Box sizing rules */
@@ -35,6 +36,7 @@ ol[role="list"] {
 body {
   min-height: 100vh;
   line-height: 1.5;
+  background: #fafafa;
 }
 
 /* Set shorter line heights on headings and interactive elements */
