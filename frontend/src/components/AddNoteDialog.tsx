@@ -59,8 +59,12 @@ const AddNoteDialog = ({ onDismiss, onNoteSaved }: AddNoteDialogProps) => {
       </Modal.Body>
 
       <ModalFooter>
-        <Button type="submit" form="addNoteForm" disabled={isSubmitting}>
-          Create
+        <Button 
+          type="submit"
+          form="addNoteForm"
+          disabled={isSubmitting}
+        >
+          Add Note
         </Button>
       </ModalFooter>
     </Modal>
